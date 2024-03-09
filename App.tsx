@@ -13,3 +13,4 @@ export default function App() {
     </>
   );
 }
+//https://docs.expo.dev/versions/latest/sdk/checkbox/

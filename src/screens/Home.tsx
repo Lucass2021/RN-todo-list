@@ -1,9 +1,11 @@
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { styles } from "./styles"
+import { Task } from "../components/Task"
 
 export const Home = () => {
     return(
         <View style={styles.container}>
+
             <View style={styles.header}>
                 <Image source={require('../assets/Logo.png')} />
 
@@ -30,6 +32,12 @@ export const Home = () => {
                     <Text style={styles.todoTextfinished}>Concluídas</Text>
                     <Text style={styles.todoStatusValue}>0</Text>
                 </View>
+            </View>
+
+            <View style={styles.tasksBox}>
+                <Task />
+                <Task />
+                <Task />
             </View>
 
 

@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         color: "#F2F2F2",
-        marginRight: 5
+        marginRight: 5,
     },
     button: {
         width: 56,
@@ -60,5 +60,8 @@ export const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         marginLeft: 10,
+    },
+    tasksBox: {
+        marginTop: 20,
     }
 })
