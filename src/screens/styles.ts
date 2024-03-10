@@ -59,6 +59,7 @@ export const styles = StyleSheet.create({
     },
     tasksBox: {
         marginTop: 20,
+        flex: 1,
     },
     emptyContainer: {
         alignItems: 'center',
