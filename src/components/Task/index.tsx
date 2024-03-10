@@ -6,17 +6,24 @@ import { EvilIcons } from '@expo/vector-icons';
 
 type Props = {
     taskName: string,
-    onRemove: () => void
+    onRemove: () => void,
+    onChecked: (isChecked: boolean) => void,
 }
 
-export const Task = ({taskName, onRemove}: Props) => {
-    const [checked, setChecked] = useState(true)
+export const Task = ({taskName, onRemove, onChecked}: Props) => {    
+    const [checked, setChecked] = useState(false); 
 
-    return(
+    const handleCheckTask = () => {
+        const newChecked = !checked;
+        setChecked(newChecked);
+        onChecked(newChecked); 
+    }
+
+    return (
         <View style={styles.container}>
             <Checkbox 
                 value={checked} 
-                onValueChange={setChecked} 
+                onValueChange={handleCheckTask} 
                 style={styles.taskCheckbox}
             />
 

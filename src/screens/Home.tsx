@@ -7,6 +7,7 @@ import { AntDesign, Octicons } from '@expo/vector-icons';
 export const Home = () => {
     const [tasks, setTasks] = useState<string[]>([])
     const [newTask, setNewTask] = useState("")
+    const [checkedTasksCount, setCheckedTasksCount] = useState(0);
 
     const handleAddTask = (newTask: string) => {
         if(tasks.includes(newTask)){
@@ -31,6 +32,10 @@ export const Home = () => {
                 text: 'No',
             },
         ])
+    }
+
+    const handleCheckTask = (isChecked: boolean) => {
+        isChecked ? setCheckedTasksCount(checkedTasksCount + 1) : setCheckedTasksCount(checkedTasksCount - 1);
     }
 
     return(
@@ -65,7 +70,7 @@ export const Home = () => {
                 </View>
                 <View style={styles.todoTextContainer}>
                     <Text style={styles.todoTextfinished}>Finished</Text>
-                    <Text style={styles.todoStatusValue}>0</Text>
+                    <Text style={styles.todoStatusValue}>{checkedTasksCount}</Text>
                 </View>
             </View>
 
@@ -78,6 +83,7 @@ export const Home = () => {
                             key={index}
                             taskName={item}
                             onRemove={() => handleRemoveTask(item, index)}
+                            onChecked={handleCheckTask}
                         />
                     )}
                     showsVerticalScrollIndicator={false}
