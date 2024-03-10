@@ -21,6 +21,18 @@ export const Home = () => {
         setNewTask("")
     }
 
+    const handleRemoveTask = (item: string, index: number) => {
+        Alert.alert("Remove task", `Do you want to remove the task ${item}?`, [
+            {
+                text: 'Yes',
+                onPress: () => setTasks(tasks.filter(task => task !== item))
+            },
+            {
+                text: 'No',
+            },
+        ])
+    }
+
     return(
         <View style={styles.container}>
 
@@ -49,7 +61,7 @@ export const Home = () => {
             <View style={styles.todoStatus}>
                 <View style={styles.todoTextContainer}>
                     <Text style={styles.todoTextCreated}>Created</Text>
-                    <Text style={styles.todoStatusValue}>0</Text>
+                    <Text style={styles.todoStatusValue}>{tasks.length}</Text>
                 </View>
                 <View style={styles.todoTextContainer}>
                     <Text style={styles.todoTextfinished}>Finished</Text>
@@ -65,6 +77,7 @@ export const Home = () => {
                         <Task 
                             key={index}
                             taskName={item}
+                            onRemove={() => handleRemoveTask(item, index)}
                         />
                     )}
                     showsVerticalScrollIndicator={false}

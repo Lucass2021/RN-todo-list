@@ -5,10 +5,11 @@ import { styles } from "./style";
 import { EvilIcons } from '@expo/vector-icons';
 
 type Props = {
-    taskName: string
+    taskName: string,
+    onRemove: () => void
 }
 
-export const Task = ({taskName}: Props) => {
+export const Task = ({taskName, onRemove}: Props) => {
     const [checked, setChecked] = useState(true)
 
     return(
@@ -23,7 +24,7 @@ export const Task = ({taskName}: Props) => {
                 {taskName}
             </Text>
 
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity activeOpacity={0.5} onPress={onRemove}>
                 <EvilIcons name="trash" size={30} color="#808080" />
             </TouchableOpacity>
         </View>
