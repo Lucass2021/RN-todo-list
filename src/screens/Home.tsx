@@ -3,30 +3,35 @@ import { styles } from "./styles"
 import { Task } from "../components/Task"
 import { useState } from "react"
 import { AntDesign, Octicons } from '@expo/vector-icons';
+import { TaskType } from "../types/Task";
 
 export const Home = () => {
-    const [tasks, setTasks] = useState<string[]>([])
+    const [tasks, setTasks] = useState<TaskType[]>([])
     const [newTask, setNewTask] = useState("")
     const [checkedTasksCount, setCheckedTasksCount] = useState(0);
 
-    const handleAddTask = (newTask: string) => {
-        if(tasks.includes(newTask)){
+    const handleAddTask = (newTaskName: string) => {
+        if (tasks.find(task => task.name === newTaskName)) {
             return Alert.alert("Task already exists!", "Create a task with a different name")
         }
 
-        if(newTask === ""){
+        if (newTaskName === "") {
             return Alert.alert("Invalid task name", "Create a task with a valid name")
         }
 
-        setTasks([...tasks, newTask])
-        setNewTask("")
+        const newTaskObject: TaskType = { name: newTaskName, id: tasks.length + 1 };
+        setTasks([...tasks, newTaskObject]);
+        setNewTask("");
     }
 
-    const handleRemoveTask = (item: string, index: number) => {
-        Alert.alert("Remove task", `Do you want to remove the task ${item}?`, [
+    const handleRemoveTask = (taskName: string, taskId: number) => {
+        Alert.alert("Remove task", `Do you want to remove the task ${taskName}?`, [
             {
                 text: 'Yes',
-                onPress: () => setTasks(tasks.filter(task => task !== item))
+                onPress: () => {
+                    setTasks(tasks.filter(task => task.id !== taskId));
+                    setCheckedTasksCount(tasks.filter(task => task.id !== taskId && task.checked).length);
+                }
             },
             {
                 text: 'No',
@@ -34,8 +39,15 @@ export const Home = () => {
         ])
     }
 
-    const handleCheckTask = (isChecked: boolean) => {
-        isChecked ? setCheckedTasksCount(checkedTasksCount + 1) : setCheckedTasksCount(checkedTasksCount - 1);
+    const handleCheckTask = (taskId: number, checked: boolean) => {
+        const updatedTasks = tasks.map(task => {
+            if (task.id === taskId) {
+                task.checked = checked;
+            }
+            return task;
+        });
+        setTasks(updatedTasks);
+        setCheckedTasksCount(updatedTasks.filter(task => task.checked).length);
     }
 
     return(
@@ -51,7 +63,6 @@ export const Home = () => {
                         placeholderTextColor={"#808080"}  
                         value={newTask}
                         onChangeText={(text) => setNewTask(text)}
-
                     />
                     <TouchableOpacity style={styles.button} activeOpacity={0.5} onPress={() => handleAddTask(newTask)}>
                         <AntDesign 
@@ -77,13 +88,12 @@ export const Home = () => {
             <View style={styles.tasksBox}>
                 <FlatList
                     data={tasks}
-                    keyExtractor={item => item}
-                    renderItem={({item, index}) => (
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({item}) => (
                         <Task 
-                            key={index}
-                            taskName={item}
-                            onRemove={() => handleRemoveTask(item, index)}
-                            onChecked={handleCheckTask}
+                            task={item}
+                            onRemove={() => handleRemoveTask(item.name, item.id)}
+                            onChecked={(checked) => handleCheckTask(item.id, checked)}
                         />
                     )}
                     showsVerticalScrollIndicator={false}
@@ -95,7 +105,6 @@ export const Home = () => {
                                 color="#808080" 
                                 style={styles.emptyIcon}
                             />
-
                             <Text style={[styles.emptyText, { fontWeight: "bold" }]}>
                                 You don't have any tasks registered
                             </Text>
@@ -105,11 +114,7 @@ export const Home = () => {
                         </View>
                     )}
                 />
-                    
-                
             </View>
-
-
         </View>
     )
 }
