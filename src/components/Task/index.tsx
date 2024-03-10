@@ -4,7 +4,11 @@ import { useState } from "react";
 import { styles } from "./style";
 import { EvilIcons } from '@expo/vector-icons';
 
-export const Task = () => {
+type Props = {
+    taskName: string
+}
+
+export const Task = ({taskName}: Props) => {
     const [checked, setChecked] = useState(true)
 
     return(
@@ -16,7 +20,7 @@ export const Task = () => {
             />
 
             <Text style={styles.taskText}>
-                Lorem ipsum dolor sit amet consectetu
+                {taskName}
             </Text>
 
             <TouchableOpacity activeOpacity={0.5}>

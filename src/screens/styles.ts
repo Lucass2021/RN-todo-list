@@ -31,10 +31,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    buttonText: {
-        color: "#fff",
-        fontSize: 24,
-    },
     todoStatus: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -63,5 +59,17 @@ export const styles = StyleSheet.create({
     },
     tasksBox: {
         marginTop: 20,
+    },
+    emptyContainer: {
+        alignItems: 'center',
+    },
+    emptyText: {
+        color: "#808080",
+        fontSize: 16,
+    },
+    emptyIcon: {
+        fontSize: 56,
+        marginTop: 50,
+        marginBottom: 20
     }
 })
